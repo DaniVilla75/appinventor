@@ -1,19 +1,23 @@
-# Proyectos educativos con App Inventor
+---
+layout: default
+title: App Inventor - Proyectos educativos
+---
+
+# App Inventor
+
+## Proyectos educativos con App Inventor
 
 **Autor:** Daniel Villarruel  
-**Temas:** Programación
-**Nivel:** Secundaria
+**Temas:** Programación Nivel: Secundaria  
 
 ---
 
-## Descripción
+### Descripción
 
-*Encontraras diferentes  aplicaciónes educativas desarrolladas con App Inventor que simula diferentes tareas.
+Encontrarás diferentes aplicaciones educativas desarrolladas con App Inventor que simulan diferentes tareas.
 
 ---
 
-## Contacto
+### Contacto
 
-¡Escribime o mandá pull request!
-
-
+¡Escríbeme o manda pull request!
