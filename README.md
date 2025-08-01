@@ -50,7 +50,7 @@
 
 ## 🤝 Créditos
 
-Desarrollado por **Daniel Villarruel**, con el apoyo de Microsoft Copilot en la planificación didáctica.  
+Desarrollado por **Daniel Villarruel**, con el apoyo de Microsoft Copilot.  
 Inspirado por la integración de tecnología en proyectos educativos reales.
 
 ---
@@ -66,7 +66,6 @@ Inspirado por la integración de tecnología en proyectos educativos reales.
 
 ## 📬 Contacto
 
-¿Querés adaptar este proyecto a otro contexto? ¿Sugerencias o colaboraciones?  
 ¡Escribime o mandá pull request! 🚜✨
 
 
