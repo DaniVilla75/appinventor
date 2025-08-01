@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Apps App Inventor</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6700; /* Naranja MeUI */
+            --primary-light: #ff9447;
+            --primary-dark: #c14a00;
+            --secondary-color: #2d89ef; /* Azul MeUI */
+            --background: #f5f5f5;
+            --surface: #ffffff;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Simulador de pantalla de celular */
+        .phone-container {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 12px solid #111;
+            position: relative;
+        }
+        
+        .phone-screen {
+            height: 100%;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+        
+        /* Barra de estado MeUI */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: var(--text-primary);
+            background-color: transparent;
+        }
+        
+        /* Barra de navegación MeUI */
+        .navbar-meui {
+            background-color: var(--surface);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-title {
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        /* Grid de iconos estilo MeUI */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 15px 0;
+        }
+        
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        .app-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .app-icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 8px;
+        }
+        
+        .app-icon-container.blue {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #5ab0ff 100%);
+        }
+        
+        .app-icon-container.green {
+            background: linear-gradient(135deg, #60c146 0%, #8bd460 100%);
+        }
+        
+        .app-icon-container.purple {
+            background: linear-gradient(135deg, #a162e8 0%, #d07ef5 100%);
+        }
+        
+        .app-icon i {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .app-name {
+            font-size: 12px;
+            color: var(--text-primary);
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        /* Secciones estilo MeUI */
+        .section {
+            margin: 20px 0;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 15px 0 10px;
+            padding-left: 10px;
+            color: var(--text-primary);
+        }
+        
+        /* Barra de búsqueda MeUI */
+        .search-bar-container {
+            padding: 10px 15px;
+        }
+        
+        .search-bar {
+            width: 100%;
+            border-radius: 20px;
+            padding: 10px 15px;
+            border: none;
+            background-color: rgba(0,0,0,0.05);
+            font-size: 14px;
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            background-color: rgba(0,0,0,0.08);
+        }
+        
+        /* Modal de detalles */
+        .modal-content {
+            border-radius: 15px;
+        }
+        
+        .app-details-img {
+            height: 180px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        
+        /* Barra inferior estilo MeUI */
+        .dock {
+            position: sticky;
+            bottom: 0;
+            background-color: var(--surface);
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .dock-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .dock-icon.active {
+            color: var(--primary-color);
+        }
+        
+        .dock-icon i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        /* Botón de acción */
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- Barra de estado -->
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi ms-2"></i>
+                    <i class="fas fa-battery-full ms-2"></i>
+                </span>
+            </div>
+            
+            <!-- Barra de navegación -->
+            <div class="navbar-meui">
+                <div class="navbar-title">
+                    <i class="fas fa-robot me-2" style="color: var(--primary-color);"></i>
+                    Mis Apps App Inventor
+                </div>
+                <div>
+                    <i class="fas fa-search me-3"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-bar-container">
+                <input type="text" class="search-bar" placeholder="Buscar aplicaciones..." id="searchInput">
+            </div>
+            
+            <!-- Sección de aplicaciones -->
+            <div class="section">
+                <h3 class="section-title">Mis Proyectos Educativos</h3>
+                <div class="app-grid" id="apps-grid">
+                    <!-- Las apps se cargarán aquí con JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Barra inferior -->
+            <div class="dock">
+                <div class="dock-icon active">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </div>
+                <div class="dock-icon">
+                    <i class="fas fa-book"></i>
+                    <span>Cursos</span>
+                </div>
+                <div class="dock-icon">
+                    <i class="fas fa-folder"></i>
+                    <span>Proyectos</span>
+                </div>
+                <div class="dock-icon">
+                    <i class="fas fa-user"></i>
+                    <span>Perfil</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para detalles de la app -->
+    <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <img id="modalAppImage" src="" class="app-details-img w-100">
+                <div class="modal-body">
+                    <h5 id="modalAppTitle" class="mb-2"></h5>
+                    <span class="badge bg-primary mb-3" id="modalAppCategory"></span>
+                    <p id="modalAppDescription" class="text-muted"></p>
+                    <div class="d-flex justify-content-between text-muted small mb-3">
+                        <span><i class="far fa-clock me-1"></i> <span id="modalAppDuration"></span></span>
+                        <span><i class="fas fa-project-diagram me-1"></i> <span id="modalAppProjects"></span> proyectos</span>
+                    </div>
+                    <button class="action-button" id="openProjectBtn">
+                        <i class="fas fa-external-link-alt"></i> Ver Proyecto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Datos de las aplicaciones (MODIFICA ESTOS CON TUS PROYECTOS REALES)
+        const apps = [
+            {
+                id: 1,
+                title: "Calculadora",
+                description: "Calculadora básica con operaciones matemáticas simples.",
+                category: "Matemáticas",
+                icon: "fa-calculator",
+                color: "blue",
+                image: "https://source.unsplash.com/random/300x200/?calculator",
+                duration: "1 semana",
+                projects: 2,
+                url: "https://github.com/tuusuario/calculadora-appinventor" // URL del proyecto
+            },
+            {
+                id: 2,
+                title: "Quiz Edu",
+                description: "Aplicación de preguntas y respuestas para aprendizaje.",
+                category: "Educación",
+                icon: "fa-question-circle",
+                color: "",
+                image: "https://source.unsplash.com/random/300x200/?quiz",
+                duration: "2 semanas",
+                projects: 3,
+                url: "https://github.com/tuusuario/quiz-edu-appinventor" // URL del proyecto
+            },
+            {
+                id: 3,
+                title: "Clima",
+                description: "Aplicación que muestra el pronóstico del tiempo.",
+                category: "Utilidad",
+                icon: "fa-cloud-sun",
+                color: "green",
+                image: "https://lageografia.com/wp-content/uploads/tormenta-clima.jpg",
+                duration: "2 semanas",
+                projects: 1,
+                url: "/tiempo/guiaalumnotiempo.pdf" // URL del proyecto
+            },
+            {
+                id: 4,
+                title: "Granja Inteligente",
+                description: "Sistema para gestionar una granja automatizada.",
+                category: "Productividad",
+                icon: "fa-robot",
+                color: "purple",
+                image: "img/granja.svg",
+                duration: "3 semanas",
+                projects: 4,
+                url: "https://danivilla75.github.io/granja-inteligente-appinventor/" // URL del proyecto
+            },
+            {
+                id: 5,
+                title: "Traductor",
+                description: "Traduce palabras y frases a diferentes idiomas.",
+                category: "Educación",
+                icon: "fa-language",
+                color: "blue",
+                image: "https://source.unsplash.com/random/300x200/?translate",
+                duration: "4 semanas",
+                projects: 2,
+                url: "https://github.com/tuusuario/traductor-appinventor" // URL del proyecto
+            },
+            {
+                id: 6,
+                title: "Truco Point",
+                description: "Tanteador para el juego de cartas Truco!.",
+                category: "Juegos",
+                icon: "fa-table",
+                color: "",
+                image: "img/truco.jpg",
+                duration: "4 semanas",
+                projects: 1,
+                url: "https://github.com/tuusuario/pomodoro-appinventor/" // URL del proyecto
+            },
+            {
+                id: 7,
+                title: "Diccionario",
+                description: "Busca definiciones de palabras y guarda favoritos.",
+                category: "Educación",
+                icon: "fa-book",
+                color: "green",
+                image: "https://source.unsplash.com/random/300x200/?dictionary",
+                duration: "3 semanas",
+                projects: 3,
+                url: "https://github.com/tuusuario/diccionario-appinventor" // URL del proyecto
+            },
+            {
+                id: 8,
+                title: "Gastos",
+                description: "Registra y categoriza tus gastos personales.",
+                category: "Finanzas",
+                icon: "fa-wallet",
+                color: "purple",
+                image: "https://source.unsplash.com/random/300x200/?finance",
+                duration: "2 semanas",
+                projects: 2,
+                url: "https://github.com/tuusuario/gastos-appinventor" // URL del proyecto
+            }
+        ];
+
+        // Variables globales
+        let currentAppUrl = "";
+        const appsGrid = document.getElementById('apps-grid');
+        const searchInput = document.getElementById('searchInput');
+        const openProjectBtn = document.getElementById('openProjectBtn');
+
+        // Función para renderizar las aplicaciones
+        function renderApps(appsToRender = apps) {
+            appsGrid.innerHTML = '';
+            
+            appsToRender.forEach(app => {
+                appsGrid.innerHTML += `
+                    <div class="app-icon" onclick="showAppDetails(${app.id})">
+                        <div class="app-icon-container ${app.color}">
+                            <i class="fas ${app.icon}"></i>
+                        </div>
+                        <span class="app-name">${app.title}</span>
+                    </div>
+                `;
+            });
+        }
+
+        // Función para mostrar detalles de la aplicación
+        function showAppDetails(appId) {
+            const app = apps.find(a => a.id === appId);
+            if (app) {
+                document.getElementById('modalAppImage').src = app.image;
+                document.getElementById('modalAppTitle').textContent = app.title;
+                document.getElementById('modalAppCategory').textContent = app.category;
+                document.getElementById('modalAppDescription').textContent = app.description;
+                document.getElementById('modalAppDuration').textContent = app.duration;
+                document.getElementById('modalAppProjects').textContent = app.projects;
+                currentAppUrl = app.url;
+                
+                // Mostrar el modal
+                const modal = new bootstrap.Modal(document.getElementById('appModal'));
+                modal.show();
+            }
+        }
+
+        // Función para filtrar aplicaciones
+        function filterApps() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredApps = apps.filter(app => 
+                app.title.toLowerCase().includes(searchTerm) || 
+                app.description.toLowerCase().includes(searchTerm) ||
+                app.category.toLowerCase().includes(searchTerm)
+            );
+            
+            renderApps(filteredApps);
+        }
+
+        // Función para abrir el proyecto
+        function openProject() {
+            if (currentAppUrl) {
+                window.open(currentAppUrl, '_blank');
+            }
+        }
+
+        // Eventos
+        document.addEventListener('DOMContentLoaded', () => {
+            renderApps();
+            
+            searchInput.addEventListener('input', filterApps);
+            openProjectBtn.addEventListener('click', openProject);
+        });
+    </script>
+</body>
+</html>
