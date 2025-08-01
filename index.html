@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Cursos App Inventor</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6200ee;
+            --primary-light: #9e47ff;
+            --primary-dark: #0400ba;
+            --secondary-color: #03dac6;
+            --background: #f5f5f5;
+            --surface: #ffffff;
+            --error: #b00020;
+            --on-primary: #ffffff;
+            --on-secondary: #000000;
+            --on-background: #000000;
+            --on-surface: #000000;
+            --on-error: #ffffff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--on-background);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .navbar-meui {
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 12px 16px;
+        }
+        
+        .card-course {
+            border-radius: 12px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .card-course:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-img-top {
+            height: 160px;
+            object-fit: cover;
+        }
+        
+        .card-body {
+            padding: 16px;
+        }
+        
+        .badge-level {
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .search-bar {
+            border-radius: 24px;
+            padding: 8px 16px;
+            border: 1px solid #e0e0e0;
+            background-color: var(--surface);
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary-light);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .course-category {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .course-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--on-surface);
+        }
+        
+        .course-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .section-title {
+            font-weight: 500;
+            margin: 24px 0 16px;
+            color: var(--on-background);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .card-img-top {
+                height: 120px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación estilo Android/MeUI -->
+    <nav class="navbar navbar-meui navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#" style="color: var(--on-primary);">
+                <i class="fas fa-robot me-2"></i>
+                <span>Mis Cursos App Inventor</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);">☰</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" style="color: var(--on-primary);">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: var(--on-primary);">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: var(--on-primary);">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: var(--on-primary);">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Barra de búsqueda -->
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control search-bar border-start-0" placeholder="Buscar cursos...">
+                    <button class="btn btn-primary ms-2" style="border-radius: 24px;">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de cursos destacados -->
+        <h3 class="section-title">
+            <i class="fas fa-star me-2" style="color: var(--primary-color);"></i>
+            Cursos Destacados
+        </h3>
+        
+        <div class="row" id="featured-courses">
+            <!-- Los cursos destacados se cargarán aquí con JavaScript -->
+        </div>
+
+        <!-- Sección de todos los cursos -->
+        <h3 class="section-title">
+            <i class="fas fa-graduation-cap me-2" style="color: var(--primary-color);"></i>
+            Todos mis Cursos
+        </h3>
+        
+        <div class="row" id="all-courses">
+            <!-- Todos los cursos se cargarán aquí con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Botón flotante -->
+    <div class="floating-btn" data-bs-toggle="tooltip" data-bs-placement="left" title="Contactar">
+        <i class="fas fa-paper-plane"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Mis Cursos App Inventor</h5>
+                    <p class="text-muted">Una colección de mis proyectos y cursos realizados con App Inventor.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Inicio</a></li>
+                        <li><a href="#" class="text-decoration-none">Cursos</a></li>
+                        <li><a href="#" class="text-decoration-none">Proyectos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> email@example.com</li>
+                        <li><i class="fab fa-github me-2"></i> github.com/usuario</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center text-muted">
+                <small>© 2023 Mis Cursos App Inventor. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Datos de ejemplo para los cursos (puedes reemplazarlos con tus propios datos)
+        const courses = [
+            {
+                id: 1,
+                title: "Introducción a App Inventor",
+                description: "Aprende los fundamentos de App Inventor y crea tu primera aplicación móvil.",
+                category: "Fundamentos",
+                level: "Principiante",
+                image: "https://source.unsplash.com/random/300x200/?app,development",
+                duration: "4 semanas",
+                projects: 5,
+                featured: true
+            },
+            {
+                id: 2,
+                title: "Juegos con App Inventor",
+                description: "Desarrolla juegos interactivos para dispositivos móviles usando App Inventor.",
+                category: "Juegos",
+                level: "Intermedio",
+                image: "https://source.unsplash.com/random/300x200/?game,mobile",
+                duration: "6 semanas",
+                projects: 3,
+                featured: true
+            },
+            {
+                id: 3,
+                title: "Aplicaciones con Base de Datos",
+                description: "Integra bases de datos en tus aplicaciones para almacenar información.",
+                category: "Avanzado",
+                level: "Avanzado",
+                image: "https://source.unsplash.com/random/300x200/?database,tech",
+                duration: "5 semanas",
+                projects: 4,
+                featured: false
+            },
+            {
+                id: 4,
+                title: "IoT con App Inventor",
+                description: "Conecta tus aplicaciones con dispositivos IoT usando App Inventor.",
+                category: "IoT",
+                level: "Intermedio",
+                image: "https://source.unsplash.com/random/300x200/?iot,technology",
+                duration: "4 semanas",
+                projects: 2,
+                featured: false
+            },
+            {
+                id: 5,
+                title: "Diseño UI/UX para Apps Móviles",
+                description: "Aprende principios de diseño para crear interfaces atractivas y usables.",
+                category: "Diseño",
+                level: "Principiante",
+                image: "https://source.unsplash.com/random/300x200/?design,ui",
+                duration: "3 semanas",
+                projects: 3,
+                featured: false
+            },
+            {
+                id: 6,
+                title: "Publicación en Google Play",
+                description: "Guía completa para publicar tus aplicaciones en Google Play Store.",
+                category: "Publicación",
+                level: "Intermedio",
+                image: "https://source.unsplash.com/random/300x200/?google,play",
+                duration: "2 semanas",
+                projects: 1,
+                featured: false
+            }
+        ];
+
+        // Función para renderizar los cursos
+        function renderCourses() {
+            const featuredContainer = document.getElementById('featured-courses');
+            const allCoursesContainer = document.getElementById('all-courses');
+            
+            // Limpiar contenedores
+            featuredContainer.innerHTML = '';
+            allCoursesContainer.innerHTML = '';
+            
+            // Renderizar cursos destacados
+            const featuredCourses = courses.filter(course => course.featured);
+            featuredCourses.forEach(course => {
+                featuredContainer.innerHTML += createCourseCard(course);
+            });
+            
+            // Renderizar todos los cursos
+            courses.forEach(course => {
+                allCoursesContainer.innerHTML += createCourseCard(course);
+            });
+            
+            // Inicializar tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+        
+        // Función para crear una tarjeta de curso
+        function createCourseCard(course) {
+            return `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-course">
+                        <img src="${course.image}" class="card-img-top" alt="${course.title}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="course-category">${course.category}</span>
+                                <span class="badge badge-level">${course.level}</span>
+                            </div>
+                            <h5 class="course-title">${course.title}</h5>
+                            <p class="course-description">${course.description}</p>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock me-1"></i> ${course.duration}</span>
+                                <span><i class="fas fa-project-diagram me-1"></i> ${course.projects} proyectos</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <button class="btn btn-sm btn-outline-primary w-100">Ver detalles</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Función para filtrar cursos
+        function filterCourses(searchTerm) {
+            const filteredCourses = courses.filter(course => 
+                course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                course.category.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            const allCoursesContainer = document.getElementById('all-courses');
+            allCoursesContainer.innerHTML = '';
+            
+            if (filteredCourses.length === 0) {
+                allCoursesContainer.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h4 class="text-muted">No se encontraron cursos</h4>
+                        <p>Intenta con otro término de búsqueda</p>
+                    </div>
+                `;
+            } else {
+                filteredCourses.forEach(course => {
+                    allCoursesContainer.innerHTML += createCourseCard(course);
+                });
+            }
+        }
+        
+        // Evento cuando el DOM está cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCourses();
+            
+            // Evento de búsqueda
+            const searchInput = document.querySelector('.search-bar');
+            searchInput.addEventListener('input', function(e) {
+                filterCourses(e.target.value);
+            });
+            
+            // Evento del botón flotante
+            const floatingBtn = document.querySelector('.floating-btn');
+            floatingBtn.addEventListener('click', function() {
+                alert('¡Contáctame para más información sobre mis cursos!');
+            });
+        });
+    </script>
+</body>
+</html>
