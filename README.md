@@ -44,4 +44,29 @@
 ---
 
 ## 📁 Estructura del repositorio
+/ProyectoGranjaInteligente ├── /AIA │ └── GranjaInteligente.aia ├── /Recursos │ └── iconos/ │ └── imagenes/ ├── /Guías │ └── GuíaDocente.pdf │ └── GuíaEstudiante.pdf ├── /MaterialDeApoyo │ └── cronograma_clases.pdf │ └── rúbrica_evaluación.pdf
+
+---
+
+## 🤝 Créditos
+
+Desarrollado por **Daniel Villarruel**, con el apoyo de Microsoft Copilot en la planificación didáctica.  
+Inspirado por la integración de tecnología en proyectos educativos reales.
+
+---
+
+## 🧪 Extensiones sugeridas
+
+- Simulación con sensores reales (Arduino + App Inventor)
+- Almacenamiento de datos con `TinyDB`
+- Versiones en múltiples idiomas
+- Publicación como APK o app web
+
+---
+
+## 📬 Contacto
+
+¿Querés adaptar este proyecto a otro contexto? ¿Sugerencias o colaboraciones?  
+¡Escribime o mandá pull request! 🚜✨
+
 
